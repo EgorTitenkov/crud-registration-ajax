@@ -1,12 +1,13 @@
 <?php
-if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirmation_password']) && isset($_POST['email']) && isset($_POST['name']))
-{
-    $user = new CreateUser($_POST['login'], $_POST['password'], $_POST['confirmation_password'], $_POST['email'], $_POST['name']);
 
+if (@$_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+
+    if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirmation_password']) && isset($_POST['email']) && isset($_POST['name']))
+    {
+        $user = new CreateUser($_POST['login'], $_POST['password'], $_POST['confirmation_password'], $_POST['email'], $_POST['name']);
+    }
 }
-?>
 
-<?php
 
 class CreateUser
 {
@@ -21,7 +22,6 @@ class CreateUser
     private $stored_users;
     private $new_user;
     private $message;
-    private $success;
 
     public function __construct($login, $password, $confirmation_password, $email, $name)
     {
