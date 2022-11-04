@@ -1,5 +1,3 @@
-<?php require("user_creation.php")?>
-
 
 <!doctype html>
 <html>
@@ -11,7 +9,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 <body>
-
 <form id="register-form" method="post">
     <div>
         <label>Login</label>
@@ -29,15 +26,14 @@
         <label>Name</label>
         <input type="text" name="name" id="name"/>
 
-        <input class="submit-button" type="submit" name="registerBtn" id="registerBtn" value="Login"/>
+        <input class="submit-button" type="submit" name="submit" id="submit"/>
+
+        <p class="output" id="output"></p>
 
         <label class="route-link">Do you already have an account?</label>
         <a class="route-span" href="/login.php">Log In</a>
-
-
     </div>
 </form>
-
 
 
 <script type="text/javascript">
@@ -110,18 +106,17 @@
                 }
             })
 
+
             if ($('#register-form').valid()) {
                 $.ajax({
-                    url: 'user_creation.php',
+                    url: 'create_user.php',
                     type: "POST",
                     data: $(this).serialize(),
-                    success: function (data) {
-                        console.log('user was created')
-                    },
-                    error: function (){
-
+                    success: function (response) {
+                        $('#output').trigger('reset');
+                        document.getElementById('output').innerText = response;
+                        $('#register-form').trigger('reset');
                     }
-
                 });
             }
         })

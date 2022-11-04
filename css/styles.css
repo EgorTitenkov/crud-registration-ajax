@@ -87,18 +87,9 @@ form .submit-button{
     cursor: pointer;
 }
 
-form button:active{
-    background-color: green;
-}
-
 .error{
     margin-top: 30px;
     color: #af0c0c;
-}
-
-.success{
-    margin-top: 30px;
-    color: green;
 }
 
 .content header a{
@@ -121,6 +112,11 @@ form button:active{
 
 .content main{
     margin-top: 50px;
+}
+
+.output {
+    margin-top: 30px;
+    color: coral;
 }
 
 .content main h3{
