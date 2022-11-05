@@ -69,6 +69,7 @@ class CreateUser
 
             } else {
                 $is_user_exists = false;
+                $this->status = 'success';
                 $this->message = "User was successfully created";
 
             }
@@ -81,16 +82,24 @@ class CreateUser
         return $is_user_exists;
     }
 
+    private function isStorageEmpty() {
+        if (empty($this->stored_users)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private function insertUser()
     {
-        if (empty($this->stored_users)) {
+        if (!$this->checkLoginOrEmailExists() && !$this->isStorageEmpty()) {
             $this->stored_users[] = $this->new_user;
             file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
-        }
-
-        if (!$this->checkLoginOrEmailExists()) {
+        } elseif ($this->isStorageEmpty()){
             $this->stored_users[] = $this->new_user;
+            $this->status = 'success';
             file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
+            $this->sendMessageResponse();
         }
     }
 
@@ -100,7 +109,7 @@ class CreateUser
             echo json_encode($this->message);
         } elseif ($this->status == 'errorEmail') {
             echo json_encode($this->message);
-        } else {
+        } elseif ($this->status == 'success') {
             echo json_encode($this->message);
         }
     }

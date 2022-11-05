@@ -37,7 +37,7 @@ class LoginUser
 
                     $_SESSION['user'] = $this->login;
 
-                    setcookie("login_cookie", $this->findNameOfUserInJSON());
+                    setcookie("login_cookie", $this->findNameOfUserInJSON(), time() + 86400);
 
                     break;
                 }
