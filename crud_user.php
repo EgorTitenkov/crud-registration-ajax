@@ -35,7 +35,7 @@ class CreateUser
 
         $this->email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-        $this->name = filter_var($name, FILTER_UNSAFE_RAW);
+        $this->name = trim(filter_var($name, FILTER_UNSAFE_RAW));
 
         $this->stored_users = json_decode(file_get_contents($this->storage), true);
 

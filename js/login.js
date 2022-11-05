@@ -31,7 +31,7 @@ $(document).ready(function () {
                 data: $(this).serialize(),
                 success: function (response) {
                     if ((response.indexOf("Invalid login or password!") > -1)) {
-                        document.getElementById('login-output').innerText = response;
+                        document.getElementById('login-output').innerText = "Invalid login or password!";
                         $('#login-form').trigger('reset');
                     } else {
                         window.location = 'account.php';
