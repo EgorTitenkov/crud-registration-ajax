@@ -1,98 +1,99 @@
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: sans-serif;
     min-height: 100vh;
     color: #555;
     background-color: skyblue;
 }
 
-form, .content{
+form, .content {
     max-width: 400px;
     min-height: 500px;
     margin: 100px auto;
-    border:  thin solid #e4e4e4;
+    border: thin solid #e4e4e4;
     padding: 40px 30px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     background-color: white;
 }
 
-form h2{
+form h2 {
     margin-bottom: 10px;
 }
 
-form h4{
+form h4 {
     margin-bottom: 40px;
     font-weight: normal;
 }
-form h4 span{
-    color:  coral;
+
+form h4 span {
+    color: coral;
     font-weight: bold;
     text-decoration: underline;
 }
-form label{
+
+form label {
     display: block;
     margin-bottom: 10px;
     padding-left: 5px;
 }
 
-form input, form textarea{
+form input, form textarea {
     display: block;
-    width:  100%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     font-size: 16px;
-    border:  thin solid #e4e4e4;
+    border: thin solid #e4e4e4;
     margin-bottom: 30px;
 }
 
-form select{
+form select {
     display: block;
-    width:  100%;
+    width: 100%;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 16px;
-    border:  thin solid #e4e4e4;
+    border: thin solid #e4e4e4;
     background-color: white;
     color: #555;
 }
 
-form input:focus
-{
+form input:focus {
     outline: none;
     border: thin solid coral;
 }
 
-form textarea{
+form textarea {
     min-height: 150px;
 }
 
-form input::placeholder{
+form input::placeholder {
     font-size: 16px;
 }
 
-form .submit-button{
+form .submit-button {
     background: #32749a;
     color: white;
     border: none;
     padding: 15px;
-    width:  100%;
+    width: 100%;
     font-size: 16px;
     margin-top: 20px;
     cursor: pointer;
 }
 
-.error{
+.error {
     margin-top: 30px;
     color: #af0c0c;
 }
 
-.content header a{
+.content header a {
     text-decoration: none;
     padding: 6px 20px;
     border: thin solid #d4d4d4;
@@ -102,7 +103,7 @@ form .submit-button{
     color: #555;
 }
 
-.content header{
+.content header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -110,7 +111,7 @@ form .submit-button{
     padding-bottom: 30px;
 }
 
-.content main{
+.content main {
     margin-top: 50px;
 }
 
@@ -119,18 +120,14 @@ form .submit-button{
     color: coral;
 }
 
-.content main h3{
-
-}
-
-.route-link{
+.route-link {
     padding: 0px;
     margin-top: 20px;
 }
 
-.route-span{
+.route-span {
     padding: 0px;
     margin-top: 20px;
-    color:  coral;
+    color: coral;
     font-weight: bold;
 }

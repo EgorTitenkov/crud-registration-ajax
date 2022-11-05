@@ -1,9 +1,8 @@
 <?php
 
-if (@$_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
-    if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirmation_password']) && isset($_POST['email']) && isset($_POST['name']))
-    {
+    if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirmation_password']) && isset($_POST['email']) && isset($_POST['name'])) {
         $user = new CreateUser($_POST['login'], $_POST['password'], $_POST['confirmation_password'], $_POST['email'], $_POST['name']);
     }
 }
@@ -22,6 +21,7 @@ class CreateUser
     private $stored_users;
     private $new_user;
     private $message;
+    private $status;
 
     public function __construct($login, $password, $confirmation_password, $email, $name)
     {
@@ -46,6 +46,9 @@ class CreateUser
             "name" => $this->name,
         ];
 
+
+        //$this->updateUserByLogin();
+        //$this->deleteUserByLogin($this->login);
         $this->insertUser();
     }
 
@@ -53,25 +56,30 @@ class CreateUser
     {
 
         foreach ($this->stored_users as $user) {
-            if ($_POST['login'] == $user['login']) {
+            if ($this->login == $user['login']) {
                 $this->message = "This login already exists";
-                echo  $this->message;
+                $this->status = 'error';
+                echo $this->message;
                 $is_exists = true;
                 break;
 
-            } elseif ($_POST['email'] == $user['email']) {
+            } elseif ($this->email == $user['email']) {
                 $this->message = "This email already exists";
+                $this->status = 'error';
                 echo $this->message;
                 $is_exists = true;
                 break;
 
             } else {
-                $this->message = "User was successfully created";
                 $is_exists = false;
+                $this->message = "User was successfully created";
+
             }
         }
 
-        echo $this->message;
+        if ($this->status != 'error') {
+            echo $this->message;
+        }
 
         unset($this->stored_users[$user['login']]);
 
@@ -88,6 +96,33 @@ class CreateUser
         if (!$this->checkLoginOrEmailExists()) {
             $this->stored_users[] = $this->new_user;
             file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
+        }
+    }
+
+    private function deleteUserByLogin($deleted_user_login)
+    {
+        foreach ($this->stored_users as $user => $login) {
+            if ($deleted_user_login == $login['login']) {
+                unset($this->stored_users[$user]);
+                file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
+                echo $this->message = "User was successfully deleted!";
+            }
+        }
+    }
+
+    private function updateUserByLogin()
+    {
+        foreach ($this->stored_users as $user => $login) {
+            if ($this->login == $login['login']) {
+
+                $this->stored_users[$user]['login'] = $this->login;
+                $this->stored_users[$user]['password'] = $this->encrypted_password;
+                $this->stored_users[$user]['email'] = $this->email;
+                $this->stored_users[$user]['name'] = $this->name;
+
+                file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
+                echo $this->message = "User was successfully updated!";
+            }
         }
     }
 }
