@@ -46,8 +46,7 @@ class CreateUser
             "name" => $this->name,
         ];
 
-
-        //$this->updateUserByLogin();
+        //$this->updateUserByLogin($this->>login);
         //$this->deleteUserByLogin($this->login);
         $this->insertUser();
     }
@@ -58,32 +57,28 @@ class CreateUser
         foreach ($this->stored_users as $user) {
             if ($this->login == $user['login']) {
                 $this->message = "This login already exists";
-                $this->status = 'error';
-                echo $this->message;
-                $is_exists = true;
+                $this->status = 'errorLogin';
+                $is_user_exists = true;
                 break;
 
             } elseif ($this->email == $user['email']) {
                 $this->message = "This email already exists";
-                $this->status = 'error';
-                echo $this->message;
-                $is_exists = true;
+                $this->status = 'errorEmail';
+                $is_user_exists = true;
                 break;
 
             } else {
-                $is_exists = false;
+                $is_user_exists = false;
                 $this->message = "User was successfully created";
 
             }
         }
 
-        if ($this->status != 'error') {
-            echo $this->message;
-        }
+        $this->sendMessageResponse();
 
         unset($this->stored_users[$user['login']]);
 
-        return $is_exists;
+        return $is_user_exists;
     }
 
     private function insertUser()
@@ -99,6 +94,17 @@ class CreateUser
         }
     }
 
+    private function sendMessageResponse()
+    {
+        if ($this->status == 'errorLogin') {
+            echo json_encode($this->message);
+        } elseif ($this->status == 'errorEmail') {
+            echo json_encode($this->message);
+        } else {
+            echo json_encode($this->message);
+        }
+    }
+
     private function deleteUserByLogin($deleted_user_login)
     {
         foreach ($this->stored_users as $user => $login) {
@@ -110,10 +116,10 @@ class CreateUser
         }
     }
 
-    private function updateUserByLogin()
+    private function updateUserByLogin($deleted_user_login)
     {
         foreach ($this->stored_users as $user => $login) {
-            if ($this->login == $login['login']) {
+            if ($deleted_user_login == $login['login']) {
 
                 $this->stored_users[$user]['login'] = $this->login;
                 $this->stored_users[$user]['password'] = $this->encrypted_password;

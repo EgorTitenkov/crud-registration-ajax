@@ -1,0 +1,10 @@
+{
+  "require": {
+    "components/jquery": "1.9.*"
+  },
+  "config": {
+    "allow-plugins": {
+      "robloach/component-installer": true
+    }
+  }
+}
