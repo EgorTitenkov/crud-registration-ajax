@@ -7,8 +7,8 @@ if (isset($_SESSION['user'])) {
     echo 'Hello '.$_SESSION['username'];
 
     echo ' <a href="?logout">Log out</a>';
-    echo ' <a href="login.php">Login</a>';
 
+    echo ' <a href="login.php">Login</a>';
 
 } else {
 

@@ -6,10 +6,6 @@ $(document).ready(function () {
             return this.optional(element) || /(?=.*[0-9])(?=.*[a-z])/.test(element.value)
         });
 
-        $.validator.addMethod("numsAndChars", function (value, element) {
-            return this.optional(element) || /(?=.*[0-9])(?=.*[a-z])/.test(element.value)
-        });
-
         $.validator.addMethod("noSpacesAndSpecialSymbols", function (value, element) {
             return this.optional(element) || !/([\s!@#$%.^&*()_])/.test(element.value)
         });
@@ -23,7 +19,7 @@ $(document).ready(function () {
         });
 
         $.validator.addMethod("onlyChars", function (value, element) {
-            return this.optional(element) || /(?=.*[a-z])/.test(element.value)
+            return this.optional(element) || /^[a-zA-Z]+$/.test(element.value)
         });
 
         $("#register-form").validate({
@@ -51,8 +47,7 @@ $(document).ready(function () {
                 name: {
                     required: true,
                     minlength: 2,
-                    onlyChars: true,
-                    noSpacesAndSpecialSymbols: true
+                    onlyChars: true
                 }
             },
 
@@ -77,7 +72,6 @@ $(document).ready(function () {
                 name: {
                     required: "Name is required!",
                     onlyChars: "Name must contain only letters!",
-                    noSpacesAndSpecialSymbols: "Spaces and special symbols (!@#$%.^&*()_) are not allowed."
                 }
             }
         })
