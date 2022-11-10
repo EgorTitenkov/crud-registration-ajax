@@ -22,6 +22,7 @@ class CreateUser
     private $new_user;
     private $message;
     private $status;
+    private $response;
 
     public function __construct($login, $password, $confirmation_password, $email, $name)
     {
@@ -49,6 +50,16 @@ class CreateUser
         //$this->updateUserByLogin($this->>login);
         //$this->deleteUserByLogin($this->login);
         $this->insertUser();
+
+        $this->response = [
+            "login" => $this->login,
+            "password" => $this->encrypted_password,
+            "email" => $this->email,
+            "name" => $this->name,
+            "message" => $this->message
+        ];
+
+        echo json_encode($this->response);
     }
 
     private function checkLoginOrEmailExists()
@@ -57,25 +68,20 @@ class CreateUser
         foreach ($this->stored_users as $user) {
             if ($this->login == $user['login']) {
                 $this->message = "This login already exists";
-                $this->status = 'errorLogin';
                 $is_user_exists = true;
                 break;
 
             } elseif ($this->email == $user['email']) {
                 $this->message = "This email already exists";
-                $this->status = 'errorEmail';
                 $is_user_exists = true;
                 break;
 
             } else {
                 $is_user_exists = false;
-                $this->status = 'success';
                 $this->message = "User was successfully created";
 
             }
         }
-
-        $this->sendMessageResponse();
 
         unset($this->stored_users[$user['login']]);
 
@@ -99,18 +105,6 @@ class CreateUser
             $this->stored_users[] = $this->new_user;
             $this->status = 'success';
             file_put_contents('data.json', json_encode($this->stored_users, JSON_PRETTY_PRINT));
-            $this->sendMessageResponse();
-        }
-    }
-
-    private function sendMessageResponse()
-    {
-        if ($this->status == 'errorLogin') {
-            echo json_encode($this->message);
-        } elseif ($this->status == 'errorEmail') {
-            echo json_encode($this->message);
-        } elseif ($this->status == 'success') {
-            echo json_encode($this->message);
         }
     }
 

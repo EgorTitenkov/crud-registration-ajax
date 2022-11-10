@@ -1,4 +1,4 @@
-<FilesMatch "data.json" >
-Order allow, deny
-Deny from all
-</FilesMatch>
+<files data.json>
+order allow,deny
+deny from all
+</files>

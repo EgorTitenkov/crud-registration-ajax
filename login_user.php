@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
     if (isset($_POST['login']) && isset($_POST['password'])) {
         $user = new LoginUser($_POST['login'], $_POST['password']);
@@ -12,6 +13,7 @@ class LoginUser
     private $storage = "data.json";
     private $stored_users;
     private $message;
+    private $response;
     private $username;
 
 
@@ -22,6 +24,14 @@ class LoginUser
         $this->stored_users = json_decode(file_get_contents($this->storage), true);
         $this->username = $this->findNameOfUserInJSON();
         $this->login();
+
+        $this->response = [
+            "login" => $this->login,
+            "password" => $this->password,
+            "message" => $this->message
+        ];
+
+        echo json_encode($this->response);
     }
 
     private function login()
@@ -30,8 +40,6 @@ class LoginUser
             if ($user['login'] == $this->login) {
                 if (password_verify($this->password, $user['password'])) {
                     $this->message = "Success";
-
-                    echo $this->message;
 
                     session_start();
 
@@ -48,7 +56,6 @@ class LoginUser
 
         if ($this->message != 'Success') {
             $this->message = 'Invalid login or password!';
-            echo $this->message;
         }
     }
 

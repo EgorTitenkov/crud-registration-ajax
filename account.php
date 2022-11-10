@@ -10,6 +10,7 @@ if (isset($_GET['logout'])) {
     header("location:login.php");
     exit();
 }
+
 ?>
 
 <!doctype html>
@@ -31,6 +32,7 @@ if (isset($_GET['logout'])) {
         <a href="?logout">Log out</a>
     </header>
 
+    <a class="route-span" href="/index.php">Register</a>
 </div>
 </body>
 </html>

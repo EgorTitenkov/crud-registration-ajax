@@ -1,41 +1,22 @@
-<!doctype html>
-<html>
-<head>
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
 
-</head>
-<link rel="stylesheet" href="/css/styles.css">
+    echo '<link rel="stylesheet" href="/css/styles.css">';
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    echo 'Hello '.$_SESSION['username'];
 
-<body>
-<form id="register-form" method="post">
-    <div>
-        <label>Login</label>
-        <input type="text" name="login" id="login"/>
+    echo ' <a href="?logout">Log out</a>';
+    echo ' <a href="login.php">Login</a>';
 
-        <label>Password</label>
-        <input type="password" name="password" id="password"/>
 
-        <label>Confirmation password</label>
-        <input type="password" name="confirmation_password" id="confirmation_password"/>
+} else {
 
-        <label>Email</label>
-        <input type="text" name="email" id="email"/>
+    include 'html/register_page.html';
 
-        <label>Name</label>
-        <input type="text" name="name" id="name"/>
+}
+?>
 
-        <input class="submit-button" type="submit" name="submit"/>
 
-        <label class="route-link">Do you already have an account?</label>
-        <a class="route-span" href="/login.php">Log In</a>
-    </div>
 
-    <p class="output" id="output"></p>
 
-</form>
-
-<script src="js/register.js"></script>
-</body>
-</html>

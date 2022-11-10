@@ -6,8 +6,20 @@ $(document).ready(function () {
             return this.optional(element) || /(?=.*[0-9])(?=.*[a-z])/.test(element.value)
         });
 
+        $.validator.addMethod("numsAndChars", function (value, element) {
+            return this.optional(element) || /(?=.*[0-9])(?=.*[a-z])/.test(element.value)
+        });
+
         $.validator.addMethod("noSpacesAndSpecialSymbols", function (value, element) {
             return this.optional(element) || !/([\s!@#$%.^&*()_])/.test(element.value)
+        });
+
+        $.validator.addMethod("validEmail", function (value, element) {
+            return this.optional(element) || /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(element.value)
+        });
+
+        $.validator.addMethod("noSpaces", function (value, element) {
+            return this.optional(element) || !/([\s])/.test(element.value)
         });
 
         $.validator.addMethod("onlyChars", function (value, element) {
@@ -24,7 +36,8 @@ $(document).ready(function () {
                 password: {
                     required: true,
                     minlength: 6,
-                    numsAndChars: true
+                    numsAndChars: true,
+                    noSpacesAndSpecialSymbols: true
                 },
                 confirmation_password: {
                     required: true,
@@ -33,12 +46,13 @@ $(document).ready(function () {
                 },
                 email: {
                     required: true,
-                    email: true
+                    validEmail: true
                 },
                 name: {
                     required: true,
                     minlength: 2,
-                    onlyChars: true
+                    onlyChars: true,
+                    noSpacesAndSpecialSymbols: true
                 }
             },
 
@@ -49,7 +63,8 @@ $(document).ready(function () {
                 },
                 password: {
                     required: "Password is required!",
-                    numsAndChars: "Password must contain numbers and symbols!"
+                    numsAndChars: "Password must contain numbers and symbols!",
+                    noSpacesAndSpecialSymbols: "Password must not contain spaces and special symbols"
                 },
                 confirmation_password: {
                     required: "Confirmation password is required!",
@@ -57,11 +72,12 @@ $(document).ready(function () {
                 },
                 email: {
                     required: "Email is required!",
-                    email: "Please enter valid email!"
+                    validEmail: "Please enter valid email!"
                 },
                 name: {
                     required: "Name is required!",
-                    onlyChars: "Name must contain only letters!"
+                    onlyChars: "Name must contain only letters!",
+                    noSpacesAndSpecialSymbols: "Spaces and special symbols (!@#$%.^&*()_) are not allowed."
                 }
             }
         })
@@ -74,8 +90,10 @@ $(document).ready(function () {
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    document.getElementById('output').innerText = response;
+                    document.getElementById('output').innerText = response['message'];
                     $('#register-form').trigger('reset');
+
+                    console.log(response)
                 }
             });
         }
